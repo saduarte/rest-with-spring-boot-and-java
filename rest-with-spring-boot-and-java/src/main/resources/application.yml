@@ -13,7 +13,10 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-
     show-sql: false
-
     open-in-view: false
+
+  logging:
+    level:
+      #root: TRACE
+      br.com.saduarte: WARN
