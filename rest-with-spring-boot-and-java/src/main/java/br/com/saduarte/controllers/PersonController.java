@@ -1,7 +1,6 @@
 package br.com.saduarte.controllers;
 
 import br.com.saduarte.data.dto.PersonDTO;
-import br.com.saduarte.model.Person;
 import br.com.saduarte.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
     @Autowired

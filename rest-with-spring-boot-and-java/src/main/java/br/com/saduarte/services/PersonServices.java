@@ -2,8 +2,6 @@ package br.com.saduarte.services;
 
 import br.com.saduarte.data.dto.PersonDTO;
 import br.com.saduarte.exception.ResourceNotFoundException;
-import static br.com.saduarte.mapper.ObjectMapper.parseListObjects;
-import static br.com.saduarte.mapper.ObjectMapper.parseObject;
 import br.com.saduarte.model.Person;
 import br.com.saduarte.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -13,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static br.com.saduarte.mapper.ObjectMapper.parseListObjects;
+import static br.com.saduarte.mapper.ObjectMapper.parseObject;
 
 @Service
 public class PersonServices {

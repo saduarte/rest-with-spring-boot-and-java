@@ -80,6 +80,5 @@ public class Person  implements Serializable {
     public int hashCode() {
         return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
     }
-
-
+    
 }
