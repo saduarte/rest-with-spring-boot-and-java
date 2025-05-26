@@ -2,6 +2,7 @@ package br.com.saduarte.services;
 
 import br.com.saduarte.controllers.PersonController;
 import br.com.saduarte.data.dto.PersonDTO;
+import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.exception.ResourceNotFoundException;
 import br.com.saduarte.model.Person;
 import br.com.saduarte.repository.PersonRepository;
@@ -45,6 +46,9 @@ public class PersonServices {
     }
 
     public PersonDTO create(PersonDTO person){
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Creating one Person!");
         var entity = parseObject(person, Person.class);
         var dto = parseObject(repository.save(entity), PersonDTO.class);
@@ -53,6 +57,9 @@ public class PersonServices {
     }
 
     public PersonDTO upDate(PersonDTO person){
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Update one Person!");
         Person entity = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
