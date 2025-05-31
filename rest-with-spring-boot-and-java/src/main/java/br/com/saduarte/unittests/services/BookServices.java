@@ -1,4 +1,4 @@
-package br.com.saduarte.services;
+package br.com.saduarte.unittests.services;
 
 import br.com.saduarte.controllers.BookController;
 import br.com.saduarte.data.dto.BookDTO;

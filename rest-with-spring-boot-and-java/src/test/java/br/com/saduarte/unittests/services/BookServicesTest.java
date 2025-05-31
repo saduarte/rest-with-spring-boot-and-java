@@ -1,10 +1,10 @@
-package br.com.saduarte.services;
+package br.com.saduarte.unittests.services;
 
 import br.com.saduarte.data.dto.BookDTO;
 import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.model.Book;
 import br.com.saduarte.repository.BookRepository;
-import br.com.saduarte.uniteTests.mapper.mocks.MockBook;
+import br.com.saduarte.unittests.mapper.mocks.MockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

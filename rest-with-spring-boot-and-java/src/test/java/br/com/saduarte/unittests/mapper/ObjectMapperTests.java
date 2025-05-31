@@ -1,8 +1,8 @@
-package br.com.saduarte.uniteTests.mapper;
+package br.com.saduarte.unittests.mapper;
 
 import br.com.saduarte.data.dto.PersonDTO;
 import br.com.saduarte.model.Person;
-import br.com.saduarte.uniteTests.mapper.mocks.MockPerson;
+import br.com.saduarte.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

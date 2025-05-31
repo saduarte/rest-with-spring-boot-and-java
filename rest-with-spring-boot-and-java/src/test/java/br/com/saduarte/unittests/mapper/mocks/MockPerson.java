@@ -1,4 +1,4 @@
-package br.com.saduarte.uniteTests.mapper.mocks;
+package br.com.saduarte.unittests.mapper.mocks;
 
 import br.com.saduarte.data.dto.PersonDTO;
 import br.com.saduarte.model.Person;

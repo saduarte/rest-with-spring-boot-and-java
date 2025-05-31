@@ -1,4 +1,4 @@
-package br.com.saduarte.services;
+package br.com.saduarte.unittests.services;
 
 import br.com.saduarte.controllers.PersonController;
 import br.com.saduarte.data.dto.PersonDTO;

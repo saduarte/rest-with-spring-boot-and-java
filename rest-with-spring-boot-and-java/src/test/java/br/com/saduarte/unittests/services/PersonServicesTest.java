@@ -1,10 +1,10 @@
-package br.com.saduarte.services;
+package br.com.saduarte.unittests.services;
 
 import br.com.saduarte.data.dto.PersonDTO;
 import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.model.Person;
 import br.com.saduarte.repository.PersonRepository;
-import br.com.saduarte.uniteTests.mapper.mocks.MockPerson;
+import br.com.saduarte.unittests.mapper.mocks.MockPerson;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
