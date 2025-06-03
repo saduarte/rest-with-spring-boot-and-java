@@ -2,7 +2,7 @@ package br.com.saduarte.controllers;
 
 import br.com.saduarte.controllers.docs.PersonControllerDocs;
 import br.com.saduarte.data.dto.PersonDTO;
-import br.com.saduarte.unittests.services.PersonServices;
+import br.com.saduarte.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

@@ -4,6 +4,7 @@ import br.com.saduarte.data.dto.BookDTO;
 import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.model.Book;
 import br.com.saduarte.repository.BookRepository;
+import br.com.saduarte.services.BookServices;
 import br.com.saduarte.unittests.mapper.mocks.MockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
