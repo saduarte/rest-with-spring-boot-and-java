@@ -83,4 +83,5 @@ public class Book implements Serializable {
     public int hashCode() {
         return Objects.hash(getId(), getAuthor(), getLaunchDate(), getPrice(), getTitle());
     }
+
 }

@@ -1,4 +1,4 @@
-package br.com.saduarte.integrationtests.controllers.withjson;
+package br.com.saduarte.integrationtests.controllers.cors.withjson;
 
 import br.com.saduarte.config.TestConfigs;
 import br.com.saduarte.integrationtests.dto.PersonDTO;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PersonControllerTest extends AbstractIntegrationTest {
+class PersonControllerCorsTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
     private static ObjectMapper objectMapper;
@@ -63,6 +63,7 @@ class PersonControllerTest extends AbstractIntegrationTest {
         person= createdPerson;
 
         assertTrue(createdPerson.getId() > 0);
+        assertTrue(createdPerson.getEnabled());
 
         assertNotNull(createdPerson.getId());
         assertNotNull(createdPerson.getFirstName());
@@ -131,6 +132,7 @@ class PersonControllerTest extends AbstractIntegrationTest {
         person= createdPerson;
 
         assertTrue(createdPerson.getId() > 0);
+        assertTrue(createdPerson.getEnabled());
 
         assertNotNull(createdPerson.getId());
         assertNotNull(createdPerson.getFirstName());
@@ -177,5 +179,6 @@ class PersonControllerTest extends AbstractIntegrationTest {
         person.setLastName("Duarte");
         person.setAddress("Belo Horizonte");
         person.setGender("Male");
+        person.setEnabled(true);
     }
 }

@@ -6,12 +6,14 @@ import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.exception.ResourceNotFoundException;
 import br.com.saduarte.model.Person;
 import br.com.saduarte.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static br.com.saduarte.mapper.ObjectMapper.parseListObjects;
 import static br.com.saduarte.mapper.ObjectMapper.parseObject;
@@ -27,11 +29,20 @@ public class PersonServices {
     PersonRepository repository;
 
 
-    public List<PersonDTO> findAll() {
+    public Page<PersonDTO> findAll(Pageable pageable) {
+
         logger.info("Finding all people!");
-        var persons =  parseListObjects(repository.findAll(), PersonDTO.class);
-        persons.forEach(this::addHateoasLinks);
-        return persons;
+
+        var people = repository.findAll(pageable);
+
+        var peopleWithLinks = people.map(person -> {
+            var dto = parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+
+        });
+
+        return peopleWithLinks;
     }
 
     public PersonDTO findById(Long id){
@@ -80,11 +91,26 @@ public class PersonServices {
         repository.delete(entity);
     }
 
+    @Transactional
+    public PersonDTO disablePerson(Long id){
+        logger.info("Disabling one Person!");
+
+        repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        repository.disablePerson(id);
+
+        var entity = repository.findById(id).get();
+        var dto =  parseObject(entity, PersonDTO.class);
+        addHateoasLinks(dto);
+        return dto;
+    }
+
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
-        dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).findAll(1,12)).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("diseble").withType("PATCH"));
         dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 
