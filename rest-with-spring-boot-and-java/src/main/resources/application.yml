@@ -28,11 +28,9 @@ spring:
       max-file-size: 200MB
       max-request-size: 215 MB
 
-
   logging:
     level:
-      root: WARN
-      br.com.saduarte: WARN
+      root: INFO
 
   spring-doc:
     paths-to-match: /api/**/v1/**

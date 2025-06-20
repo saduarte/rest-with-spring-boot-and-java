@@ -22,8 +22,9 @@ import java.util.List;
 
 public interface PersonControllerDocs {
 
-    @Operation(summary = "Encontrando todas as pessoas",
-            description = "Encontrando todas as pessoas",
+    @Operation(summary = "Find All People",
+            description = "Finds All People",
+            tags = {"People"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -47,8 +48,53 @@ public interface PersonControllerDocs {
             @RequestParam(value = "direction", defaultValue = "asc") String direction
     );
 
-    @Operation(summary = "Encontrando pessoas pelo nome",
-            description = "Encontrando pessoas pelo primeiro nome",
+    @Operation(summary = "Export People",
+            description = "Export a Page of People in XLSX and CSV format",
+            tags = {"People"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = {
+                                    @Content(mediaType = MediaTypes.APPLICATION_XLSX_VALUE),
+                                    @Content(mediaType = MediaTypes.APPLICATION_CSV_VALUE)
+                            }),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    ResponseEntity<Resource> exportPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "12") Integer size,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            HttpServletRequest request
+    );
+
+    @Operation(summary = "Massive People Creation",
+            description = "Massive People Creation with upload of XLSX or CSV",
+            tags = {"People"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = {
+                                    @Content(schema = @Schema(implementation = PersonDTO.class))
+                            }),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    List<PersonDTO> massCreation(MultipartFile file);
+
+    @Operation(summary = "Find People by FirstName",
+            description = "Finds People by their First Names",
+            tags = {"People"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -73,8 +119,9 @@ public interface PersonControllerDocs {
             @RequestParam(value = "direction", defaultValue = "asc") String direction
     );
 
-    @Operation(summary = "Encontrando uma pessoa",
-            description = "Encontrando uma pessoa pelo ID",
+    @Operation(summary = "Finds a Person",
+            description = "Find a specific person by your ID",
+            tags = {"People"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -85,12 +132,31 @@ public interface PersonControllerDocs {
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
     PersonDTO findById(@PathVariable("id") Long id);
 
-    @Operation(summary = "Adicionando uma pessoa",
-            description = "Adicionando uma nova pessoa por JSON ou XML",
+    @Operation(summary = "Export Person data as PDF",
+            description = "Export a specific Person data as PDF by your ID",
+            tags = {"People"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(mediaType = MediaTypes.APPLICATION_PDF_VALUE)),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    ResponseEntity<Resource> export(@PathVariable("id") Long id, HttpServletRequest request);
+
+    @Operation(summary = "Adds a new Person",
+            description = "Adds a new person by passing in a JSON, XML or YML representation of the person.",
+            tags = {"People"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -104,8 +170,9 @@ public interface PersonControllerDocs {
     )
     PersonDTO create(@RequestBody PersonDTO person);
 
-    @Operation(summary = "Atualizando informações de uma pessoa",
-            description = "Atualizando informações de uma pessoa por JSON ou XML",
+    @Operation(summary = "Updates a person's information",
+            description = "Updates a person's information by passing in a JSON, XML or YML representation of the updated person.",
+            tags = {"People"},
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -121,8 +188,27 @@ public interface PersonControllerDocs {
     )
     PersonDTO update(@RequestBody PersonDTO person);
 
-    @Operation(summary = "Deletando uma pessoa",
-            description = "Deletando uma pessoa específica pelo ID",
+    @Operation(summary = "Disable a Person",
+            description = "Disable a specific person by your ID",
+            tags = {"People"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = PersonDTO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    PersonDTO disablePerson(@PathVariable("id") Long id);
+
+    @Operation(summary = "Deletes a Person",
+            description = "Deletes a specific person by their ID",
+            tags = {"People"},
             responses = {
                     @ApiResponse(
                             description = "No Content",
@@ -134,63 +220,4 @@ public interface PersonControllerDocs {
             }
     )
     ResponseEntity<?> delete(@PathVariable("id") Long id);
-
-    @Operation(summary = "Desabilitando uma pessoa",
-            description = "Desabilitando uma pessoa pelo ID",
-            responses = {
-                    @ApiResponse(
-                            description = "Success",
-                            responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = PersonDTO.class))
-                    ),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-            }
-    )
-    PersonDTO disablePerson(@PathVariable("id") Long id);
-
-    @Operation(summary = "Grande quantidade de criação de pessoas",
-            description = "criando varias pessoas",
-            responses = {
-                    @ApiResponse(
-                            description = "Success",
-                            responseCode = "200",
-                            content = {
-                                    @Content(schema = @Schema(implementation = PersonDTO.class))
-                            }),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            }
-    )
-    List<PersonDTO> massCreation(MultipartFile file);
-
-    @Operation(summary = "Export people",
-            description = "Export a page of people",
-            responses = {
-                    @ApiResponse(
-                            description = "Success",
-                            responseCode = "200",
-                            content = {
-                                    @Content(mediaType = MediaTypes.APPLICATION_XLSX_VALUE),
-                                    @Content(mediaType = MediaTypes.APPLICATION_CSV_VALUE )
-                            }),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            }
-    )
-    ResponseEntity<Resource> exportPage(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "12") Integer size,
-            @RequestParam(value = "direction", defaultValue = "asc") String direction,
-            HttpServletRequest request
-
-    );
 }
