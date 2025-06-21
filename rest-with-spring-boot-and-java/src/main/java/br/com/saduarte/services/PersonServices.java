@@ -6,8 +6,7 @@ import br.com.saduarte.exception.BadRequestException;
 import br.com.saduarte.exception.FileStorageException;
 import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.exception.ResourceNotFoundException;
-import br.com.saduarte.file.exporter.MediaTypes;
-import br.com.saduarte.file.exporter.contract.FileExporter;
+import br.com.saduarte.file.exporter.contract.PersonExporter;
 import br.com.saduarte.file.exporter.factory.FileExporterFactory;
 import br.com.saduarte.file.importer.contract.FileImporter;
 import br.com.saduarte.file.importer.factory.FileImporterFactory;
@@ -89,8 +88,8 @@ public class PersonServices {
         var people = repository.findAll(pageable).map(person -> parseObject(person, PersonDTO.class)).getContent();
 
         try {
-            FileExporter exporter = this.exporter.getExporter(acceptHeader);
-            return exporter.exportFile(people);
+            PersonExporter exporter = this.exporter.getExporter(acceptHeader);
+            return exporter.exportPeople(people);
         } catch (Exception e) {
             throw new RuntimeException("Error during file export",e);
         }
@@ -184,7 +183,7 @@ public class PersonServices {
                 .map(entity -> parseObject(entity, PersonDTO.class) )
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
         try {
-            FileExporter exporter = this.exporter.getExporter(acceptHeader);
+            PersonExporter exporter = this.exporter.getExporter(acceptHeader);
             return exporter.exportPerson(person);
         } catch (Exception e) {
             throw new RuntimeException("Erro durring file export!",e);

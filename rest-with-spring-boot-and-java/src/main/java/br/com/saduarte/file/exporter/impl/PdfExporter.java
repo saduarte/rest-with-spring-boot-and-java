@@ -1,7 +1,7 @@
 package br.com.saduarte.file.exporter.impl;
 
 import br.com.saduarte.data.dto.PersonDTO;
-import br.com.saduarte.file.exporter.contract.FileExporter;
+import br.com.saduarte.file.exporter.contract.PersonExporter;
 import br.com.saduarte.services.QrCodeService;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class PdfExporter implements FileExporter {
+public class PdfExporter implements PersonExporter {
 
     @Autowired
     private QrCodeService qrCodeService;
 
     @Override
-    public Resource exportFile(List<PersonDTO> people) throws Exception {
+    public Resource exportPeople(List<PersonDTO> people) throws Exception {
 
         InputStream inputStream = getClass().getResourceAsStream("/templates/people.jrxml");
 

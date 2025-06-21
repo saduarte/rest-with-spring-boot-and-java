@@ -2,7 +2,7 @@ package br.com.saduarte.file.exporter.factory;
 
 import br.com.saduarte.exception.BadRequestException;
 import br.com.saduarte.file.exporter.MediaTypes;
-import br.com.saduarte.file.exporter.contract.FileExporter;
+import br.com.saduarte.file.exporter.contract.PersonExporter;
 import br.com.saduarte.file.exporter.impl.CsvExporter;
 import br.com.saduarte.file.exporter.impl.PdfExporter;
 import br.com.saduarte.file.exporter.impl.XlsxExporter;
@@ -17,7 +17,7 @@ public class FileExporterFactory {
     @Autowired
     private ApplicationContext context;
 
-    public FileExporter getExporter(String acceptHeader) throws Exception{
+    public PersonExporter getExporter(String acceptHeader) throws Exception{
 
         if (acceptHeader.equalsIgnoreCase(MediaTypes.APPLICATION_XLSX_VALUE)){
             return context.getBean(XlsxExporter.class);
