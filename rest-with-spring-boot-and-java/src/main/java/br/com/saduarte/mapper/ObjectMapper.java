@@ -25,5 +25,4 @@ public class ObjectMapper {
         return destinationObject;
     }
 
-
 }

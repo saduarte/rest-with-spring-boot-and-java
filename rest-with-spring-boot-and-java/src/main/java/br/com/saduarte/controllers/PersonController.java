@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/person/v1")
-@Tag(name= "Pessoas", description = "Endpoints para gerenciar pessoas")
+@Tag(name = "People", description = "Endpoints for Managing People")
 public class PersonController implements PersonControllerDocs {
 
     @Autowired
