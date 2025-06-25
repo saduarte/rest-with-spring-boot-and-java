@@ -3,7 +3,6 @@ package br.com.saduarte.services;
 import br.com.saduarte.controllers.BookController;
 import br.com.saduarte.controllers.PersonController;
 import br.com.saduarte.data.dto.BookDTO;
-import br.com.saduarte.data.dto.PersonDTO;
 import br.com.saduarte.exception.RequiredObjectIsNullException;
 import br.com.saduarte.exception.ResourceNotFoundException;
 import br.com.saduarte.model.Book;
@@ -24,9 +23,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
-public class BookServices {
+public class BookService {
 
-    private Logger logger = LoggerFactory.getLogger(BookServices.class.getName());
+    private Logger logger = LoggerFactory.getLogger(BookService.class.getName());
 
     @Autowired
     BookRepository repository;

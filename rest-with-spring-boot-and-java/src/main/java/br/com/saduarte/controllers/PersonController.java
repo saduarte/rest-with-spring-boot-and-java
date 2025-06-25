@@ -3,7 +3,7 @@ package br.com.saduarte.controllers;
 import br.com.saduarte.controllers.docs.PersonControllerDocs;
 import br.com.saduarte.data.dto.PersonDTO;
 import br.com.saduarte.file.exporter.MediaTypes;
-import br.com.saduarte.services.PersonServices;
+import br.com.saduarte.services.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import java.util.Map;
 public class PersonController implements PersonControllerDocs {
 
     @Autowired
-    private PersonServices service;
+    private PersonService service;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override

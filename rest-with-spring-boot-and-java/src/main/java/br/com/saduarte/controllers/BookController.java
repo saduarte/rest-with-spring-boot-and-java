@@ -2,7 +2,7 @@ package br.com.saduarte.controllers;
 
 import br.com.saduarte.controllers.docs.BookControllerDocs;
 import br.com.saduarte.data.dto.BookDTO;
-import br.com.saduarte.services.BookServices;
+import br.com.saduarte.services.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class BookController implements BookControllerDocs {
 
     @Autowired
-    private BookServices service;
+    private BookService service;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override

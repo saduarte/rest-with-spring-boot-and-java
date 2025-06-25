@@ -22,6 +22,7 @@
 		<apache.poi.version>5.4.1</apache.poi.version>
 		<jasperreports.version>7.0.3</jasperreports.version>
 		<zxing.version>3.5.3</zxing.version>
+		<java-jwt.version>4.5.0</java-jwt.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -35,6 +36,15 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${java-jwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.hateoas</groupId>

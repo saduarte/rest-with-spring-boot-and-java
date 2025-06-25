@@ -2,6 +2,11 @@ cors:
   originPatterns: http://localhost:8080,http://localhost:3000
 file:
   upload-dir: C:\Users\Samsung\Downloads\Code
+security:
+  jwt:
+    token:
+      secret-key: 35cr37
+      expire-lenght: 3600000
 email:
   subject: "Default Subject"
   message: "Default Message"
@@ -42,6 +47,8 @@ logging:
     # root: WARN
     # br.com.saduarte: DEBUG
 spring-doc:
-  paths-to-match: /api/**/v1/**
+  paths-to-match:
+    - /auth/**
+    - /api/**/v1/**
   swagger-ui:
     use-root-path: true
