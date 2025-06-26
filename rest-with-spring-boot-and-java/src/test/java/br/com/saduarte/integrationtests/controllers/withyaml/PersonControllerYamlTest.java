@@ -2,7 +2,9 @@ package br.com.saduarte.integrationtests.controllers.withyaml;
 
 import br.com.saduarte.config.TestConfigs;
 import br.com.saduarte.integrationtests.controllers.withyaml.mapper.YAMLMapper;
+import br.com.saduarte.integrationtests.dto.AccountCredentialsDTO;
 import br.com.saduarte.integrationtests.dto.PersonDTO;
+import br.com.saduarte.integrationtests.dto.TokenDTO;
 import br.com.saduarte.integrationtests.dto.wrappers.xmlandyaml.PagedModelPerson;
 import br.com.saduarte.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,6 +23,7 @@ import org.springframework.http.MediaType;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -30,25 +33,59 @@ class PersonControllerYamlTest extends AbstractIntegrationTest {
     private static RequestSpecification specification;
     private static YAMLMapper objectMapper;
     private static PersonDTO person;
+    private static TokenDTO tokenDTO;
 
     @BeforeAll
     static void setUp() {
         objectMapper = new YAMLMapper();
         person = new PersonDTO();
+        tokenDTO = new TokenDTO();
     }
 
     @Test
     @Order(1)
-    void createTest() throws JsonProcessingException {
-        mockPerson();
+    void signin() throws JsonProcessingException {
+        AccountCredentialsDTO credentials =
+                new AccountCredentialsDTO("sabrina", "admin234");
+
+        tokenDTO = given()
+                .config(
+                        RestAssuredConfig.config()
+                                .encoderConfig(
+                                        EncoderConfig.encoderConfig().
+                                                encodeContentTypeAs(MediaType.APPLICATION_YAML_VALUE, ContentType.TEXT))
+                )
+                .basePath("/auth/signin")
+                .port(TestConfigs.SERVER_PORT)
+                .contentType(MediaType.APPLICATION_YAML_VALUE)
+                .accept(MediaType.APPLICATION_YAML_VALUE)
+                .body(credentials, objectMapper)
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .as(TokenDTO.class, objectMapper);
 
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_MEU_SITE)
+                .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + tokenDTO.getAccessToken())
                 .setBasePath("/api/person/v1")
                 .setPort(TestConfigs.SERVER_PORT)
                 .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                 .build();
+
+        assertNotNull(tokenDTO.getAccessToken());
+        assertNotNull(tokenDTO.getRefreshToken());
+    }
+
+
+    @Test
+    @Order(1)
+    void createTest() throws JsonProcessingException {
+        mockPerson();
 
         var createdPerson = given().config(
                 RestAssuredConfig.config().
