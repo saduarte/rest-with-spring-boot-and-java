@@ -3,7 +3,7 @@ server:
 cors:
   originPatterns: http://localhost:8080, http://localhost:3000/
 file:
-  upload-dir: C:/Users/Samsung/Downloads/Code
+  upload-dir: /home/runner/work/rest-with-spring-boot-and-java/Code
 security:
   jwt:
     token:
