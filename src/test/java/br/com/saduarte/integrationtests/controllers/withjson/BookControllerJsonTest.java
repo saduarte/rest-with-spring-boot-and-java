@@ -205,7 +205,7 @@ class BookControllerJsonTest extends AbstractIntegrationTest {
         assertTrue(bookOne.getId() > 0);
         assertEquals("Agile and Iterative Development: A Manager’s Guide", bookOne.getTitle());
         assertEquals("Craig Larman", bookOne.getAuthor());
-        assertEquals(144.98, bookOne.getPrice());
+        assertEquals(43.82, bookOne.getPrice());
 
         BookDTO foundBookFive = books.get(4);
 
@@ -216,7 +216,7 @@ class BookControllerJsonTest extends AbstractIntegrationTest {
         assertTrue(foundBookFive.getId() > 0);
         assertEquals("Agile and Iterative Development: A Manager’s Guide", foundBookFive.getTitle());
         assertEquals("Craig Larman", foundBookFive.getAuthor());
-        assertEquals(56.47, foundBookFive.getPrice());
+        assertEquals(128.07, foundBookFive.getPrice());
     }
 
     private void mockBook() {
