@@ -18,7 +18,7 @@ services:
   rest-with-spring-boot:
     image: sabsduarte/rest-with-spring-boot
     restart: always
-    build: ./rest-with-spring-boot-and-java
+    build: .
     working_dir: /rest-with-spring-boot-and-java
     environment:
       TZ: America/Sao_Paulo
